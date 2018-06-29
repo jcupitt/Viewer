@@ -280,7 +280,7 @@ bool Viewer::Update1(mirtk::GreyImage *image, mirtk::MultiLevelTransformation *m
 
   // Check number of control points
   if ((affd->GetX() >= MaxNumberOfCP) || (affd->GetY() >= MaxNumberOfCP) || (affd->GetZ() >= MaxNumberOfCP)) {
-    cerr << "Transformation has too many control points" << endl;
+    std::cerr << "Transformation has too many control points" << std::endl;
     exit(1);
   }
 

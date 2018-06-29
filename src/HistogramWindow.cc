@@ -42,7 +42,7 @@ void HistogramWindow::CalculateHistograms()
   int i;
 
   if (_v->GetTarget()->IsEmpty()) {
-    cerr << "No target image loaded." << endl;
+    std::cerr << "No target image loaded." << std::endl;
     return;
   }
 
@@ -63,7 +63,7 @@ void HistogramWindow::CalculateHistogram(int label_id)
   double value;
 
   if (_v->GetTarget()->IsEmpty()) {
-    cerr<< "No target image loaded." << endl;
+    std::cerr<< "No target image loaded." << std::endl;
     return;
   }
 

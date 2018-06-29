@@ -925,25 +925,25 @@ void RView::FillContour(int fill, int)
 }
 
 // part of IRTK, but dropped for MIRTK
-static int read_line(istream &in, char *buffer1, char *&buffer2)
+static int read_line(std::istream &in, char *buffer1, char *&buffer2)
 {
-    char c;
+  char c;
 
-    do {
-        if (in.eof() == true) return 0;
-        in.getline(buffer1, 255);
-        c = buffer1[0];
-    } while ((strlen(buffer1) == 0) || (c == '#') || (c == 13));
+  do {
+    if (in.eof() == true) return 0;
+    in.getline(buffer1, 255);
+    c = buffer1[0];
+  } while ((strlen(buffer1) == 0) || (c == '#') || (c == 13));
 
-    if ((buffer2 = strchr(buffer1, '=')) == NULL) {
-        cerr << "No valid line format\n";
-        exit(1);
-    }
-    do {
-        buffer2++;
-    } while ((*buffer2 == ' ') || (*buffer2 == '\t'));
+  if ((buffer2 = strchr(buffer1, '=')) == NULL) {
+    std::cerr << "No valid line format\n";
+    exit(1);
+  }
+  do {
+    buffer2++;
+  } while ((*buffer2 == ' ') || (*buffer2 == '\t'));
 
-    return strlen(buffer1);
+  return strlen(buffer1);
 }
 
 void RView::Read(char *name)
@@ -953,9 +953,9 @@ void RView::Read(char *name)
   char buffer1[255], *buffer2 = NULL;
 
   // Open file
-  ifstream from(name);
+  std::ifstream from(name);
   if (!from) {
-    cerr << "RView::Read: Can't open file " << name << "\n";
+    std::cerr << "RView::Read: Can't open file " << name << std::endl;
     exit(1);
   }
 
@@ -1076,7 +1076,7 @@ void RView::Read(char *name)
         interpolation = mirtk::Interpolation_Sinc;
         ok = true;
       } else {
-        cerr << "RView::Read: Unknown interpolation" << endl;
+        std::cerr << "RView::Read: Unknown interpolation" << std::endl;
         exit(1);
       }
     }
@@ -1103,7 +1103,7 @@ void RView::Read(char *name)
         interpolation = mirtk::Interpolation_Sinc;
         ok = true;
       } else {
-        cerr << "RView::Read: Unknown interpolation" << endl;
+        std::cerr << "RView::Read: Unknown interpolation" << std::endl;
         exit(1);
       }
     }
@@ -1295,7 +1295,7 @@ void RView::Read(char *name)
     // Check if we parse every line
 #ifdef DEBUG
     if (ok != true) {
-      cerr << "RView::Read() : Ignoring line " << buffer1 << endl;
+      std::cerr << "RView::Read() : Ignoring line " << buffer1 << std::endl;
     }
     // Avoid "set but not used" warning
 #else
@@ -1369,9 +1369,9 @@ void RView::Read(char *name)
 void RView::Write(char *name)
 {
   // Open file
-  ofstream to(name);
+  std::ofstream to(name);
   if (!to) {
-    cerr << "RView::Write: Can't open file " << name << "\n";
+    std::cerr << "RView::Write: Can't open file " << name << std::endl;
     exit(1);
   }
 
@@ -1434,17 +1434,17 @@ void RView::Write(char *name)
       break;
   }
   // Width of viewer  (in pixels)
-  to << "screenX                           = " << _screenX << endl;
+  to << "screenX                           = " << _screenX << std::endl;
   // Height of viewer (in pixels)
-  to << "screenY                           = " << _screenY << endl;
+  to << "screenY                           = " << _screenY << std::endl;
   // Display origin (in mm)
-  to << "origin_x                          = " << _origin_x << endl;
+  to << "origin_x                          = " << _origin_x << std::endl;
   // Display origin (in mm)
-  to << "origin_y                          = " << _origin_y << endl;
+  to << "origin_y                          = " << _origin_y << std::endl;
   // Display origin (in mm)
-  to << "origin_z                          = " << _origin_z << endl;
+  to << "origin_z                          = " << _origin_z << std::endl;
   // Display resolution
-  to << "resolution                        = " << _resolution << endl;
+  to << "resolution                        = " << _resolution << std::endl;
 
   // Interpolation mode for target image
   switch (this->GetTargetInterpolationMode()) {
@@ -1514,13 +1514,15 @@ void RView::Write(char *name)
       break;
   }
   // Display viewing mix in shutter viewing mode
-  to << "viewMix                           = " << _viewMix << endl;
+  to << "viewMix                           = " << _viewMix << std::endl;
   // Flag for display of isolines from target image
-  to << "DisplayTargetContour              = " << _DisplayTargetContour << endl;
+  to << "DisplayTargetContour              = " << _DisplayTargetContour << 
+    std::endl;
   // Flag for display of isolines from source image
-  to << "DisplaySourceContour              = " << _DisplaySourceContour << endl;
+  to << "DisplaySourceContour              = " << _DisplaySourceContour << 
+    std::endl;
   // Flag for display of cross hair
-  to << "DisplayCursor                     = " << _DisplayCursor << endl;
+  to << "DisplayCursor                     = " << _DisplayCursor << std::endl;
   // cursor mode
   switch (_CursorMode) {
     case CrossHair:
@@ -1537,32 +1539,35 @@ void RView::Write(char *name)
       break;
   }
   // Flag for display of deformation grid
-  to << "DisplayDeformationGrid            = " << _DisplayDeformationGrid
-  << endl;
+  to << "DisplayDeformationGrid            = " << _DisplayDeformationGrid << 
+    std::endl;
   // Flag for display of deformation points
-  to << "DisplayDeformationPoints          = " << _DisplayDeformationPoints
-  << endl;
+  to << "DisplayDeformationPoints          = " << _DisplayDeformationPoints << 
+    std::endl;
   // Flag for display of deformation arrows
-  to << "DisplayDeformationArrows          = " << _DisplayDeformationArrows
-  << endl;
+  to << "DisplayDeformationArrows          = " << _DisplayDeformationArrows << 
+    std::endl;
   // Flag for display of landmarks
-  to << "DisplayLandmarks                  = " << _DisplayLandmarks << endl;
+  to << "DisplayLandmarks                  = " << _DisplayLandmarks << 
+    std::endl;
 #ifdef HAS_VTK
   // Flag for display of object
-  to << "DisplayObject                     = " << _DisplayObject << endl;
+  to << "DisplayObject                     = " << _DisplayObject << std::endl;
   // Flag for warping of object
-  to << "DisplayObjectWarp                 = " << _DisplayObjectWarp << endl;
+  to << "DisplayObjectWarp                 = " << _DisplayObjectWarp << 
+    std::endl;
   // Flag for display of object grid
-  to << "DisplayObjectGrid                 = " << _DisplayObjectGrid << endl;
+  to << "DisplayObjectGrid                 = " << _DisplayObjectGrid << 
+    std::endl;
 #endif
   // Lookup tables (could be replaced by LookupTable stream)
   to << "\n#\n# LookupTables\n#\n\n";
 
   // targetLookupTable
-  to << "targetLookupTable_minDisplay      = "
-  << _targetLookupTable->GetMinDisplayIntensity() << endl;
-  to << "targetLookupTable_maxDisplay      = "
-  << _targetLookupTable->GetMaxDisplayIntensity() << endl;
+  to << "targetLookupTable_minDisplay      = " << 
+    _targetLookupTable->GetMinDisplayIntensity() << std::endl;
+  to << "targetLookupTable_maxDisplay      = " << 
+    _targetLookupTable->GetMaxDisplayIntensity() << std::endl;
   switch (_targetLookupTable->GetColorMode()) {
     case ColorMode_Red:
       to << "targetLookupTable_mode            = ColorMode_Red\n";
@@ -1583,10 +1588,10 @@ void RView::Write(char *name)
       break;
   }
   // sourceLookupTable
-  to << "sourceLookupTable_minDisplay      = "
-  << _sourceLookupTable->GetMinDisplayIntensity() << endl;
-  to << "sourceLookupTable_maxDisplay      = "
-  << _sourceLookupTable->GetMaxDisplayIntensity() << endl;
+  to << "sourceLookupTable_minDisplay      = " << 
+    _sourceLookupTable->GetMinDisplayIntensity() << std::endl;
+  to << "sourceLookupTable_maxDisplay      = " << 
+    _sourceLookupTable->GetMaxDisplayIntensity() << std::endl;
   switch (_sourceLookupTable->GetColorMode()) {
     case ColorMode_Red:
       to << "sourceLookupTable_mode            = ColorMode_Red\n";
@@ -1607,10 +1612,10 @@ void RView::Write(char *name)
       break;
   }
   // subtractionLookupTable
-  to << "subtractionLookupTable_minDisplay = "
-  << _subtractionLookupTable->GetMinDisplayIntensity() << endl;
-  to << "subtractionLookupTable_maxDisplay = "
-  << _subtractionLookupTable->GetMaxDisplayIntensity() << endl;
+  to << "subtractionLookupTable_minDisplay = " << 
+    _subtractionLookupTable->GetMinDisplayIntensity() << std::endl;
+  to << "subtractionLookupTable_maxDisplay = " << 
+    _subtractionLookupTable->GetMaxDisplayIntensity() << std::endl;
   switch (_subtractionLookupTable->GetColorMode()) {
     case ColorMode_Red:
       to << "subtractionLookupTable_mode       = ColorMode_Red\n";
@@ -1687,20 +1692,20 @@ void RView::ReadTarget(int argc, char **argv)
   nimages = new mirtk::Image *[n];
 
   // Read images
-  cout << "Reading " << argv[0] << endl;
+  std::cout << "Reading " << argv[0] << std::endl;
   nimages[0] = mirtk::Image::New(argv[0]);
 
   mirtk::ImageAttributes refattr = nimages[0]->GetImageAttributes();
   refattr._torigin = 0;
   refattr._dt      = 1;
   for (i = 1; i < n; i++) {
-    cout << "Reading " << argv[i] << endl;
+    std::cout << "Reading " << argv[i] << std::endl;
     nimages[i] = mirtk::Image::New(argv[i]);
     mirtk::ImageAttributes attr = nimages[i]->GetImageAttributes();
     attr._torigin = 0;
     attr._dt      = 1;
     if (attr != refattr) {
-      cerr << "Mismatch of image geometry in sequence" << endl;
+      std::cerr << "Mismatch of image geometry in sequence" << std::endl;
       nimages[0]->Print();
       nimages[i]->Print();
       exit(1);
@@ -1732,8 +1737,8 @@ void RView::ReadTarget(int argc, char **argv)
   } else if (dynamic_cast<mirtk::GenericImage<double> *> (nimages[0]) != NULL) {
     _targetImage = new mirtk::GenericImage<double> (attr);
   } else {
-    cerr << "RView::ReadTarget: Cannot convert image to desired type"
-    << endl;
+    std::cerr << "RView::ReadTarget: Cannot convert image to desired type" << 
+      std::endl;
     exit(1);
   }
 
@@ -1821,20 +1826,20 @@ void RView::ReadSource(int argc, char **argv)
   // Allocate memory
   nimages = new mirtk::Image *[n];
 
-  cout << "Reading " << argv[0] << endl;
+  std::cout << "Reading " << argv[0] << std::endl;
   nimages[0] = mirtk::Image::New(argv[0]);
   mirtk::ImageAttributes refattr = nimages[0]->GetImageAttributes();
   refattr._torigin = 0;
   refattr._dt      = 1;
 
   for (i = 1; i < n; i++) {
-    cout << "Reading " << argv[i] << endl;
+    std::cout << "Reading " << argv[i] << std::endl;
     nimages[i] = mirtk::Image::New(argv[i]);
     mirtk::ImageAttributes attr = nimages[i]->GetImageAttributes();
     attr._torigin = 0;
     attr._dt      = 1;
     if (attr != refattr) {
-      cerr << "Mismatch of image geometry in sequence" << endl;
+      std::cerr << "Mismatch of image geometry in sequence" << std::endl;
       exit(1);
     }
   }
@@ -1864,8 +1869,8 @@ void RView::ReadSource(int argc, char **argv)
   } else if (dynamic_cast<mirtk::GenericImage<double> *> (nimages[0]) != NULL) {
     _sourceImage = new mirtk::GenericImage<double> (attr);
   } else {
-    cerr << "RView::ReadSource: Cannot convert image to desired type"
-    << endl;
+    std::cerr << "RView::ReadSource: Cannot convert image to desired type" << 
+      std::endl;
     exit(1);
   }
 
@@ -2007,16 +2012,20 @@ void RView::WriteTransformation(char *name)
 
 void RView::ReadTargetLandmarks(char *name)
 {
+#ifdef MIRTK_Numerics_WITH_VTK
   // Read target landmarks
   _targetLandmarks.ReadVTK(name);
   _selectedTargetLandmarks.clear();
+#endif
 }
 
 void RView::ReadSourceLandmarks(char *name)
 {
+#ifdef MIRTK_Numerics_WITH_VTK
   // Read source landmarks
   _sourceLandmarks.ReadVTK(name);
   _selectedSourceLandmarks.clear();
+#endif
 }
 
 void RView::WriteTargetLandmarks(char *name)
@@ -2035,7 +2044,7 @@ void RView::WriteSourceLandmarks(char *name)
 void RView::ReadObject(const char *name)
 {
   if (_NoOfObjects >= MAX_NUMBER_OF_OBJECTS) {
-    cerr << "RView::ReadObject(): maximum number of objects reached!\n";
+    std::cerr << "RView::ReadObject(): maximum number of objects reached!\n";
     return;
   }
 
@@ -2116,7 +2125,8 @@ void RView::Reset()
           _zaxis[2] = -xaxis[2];
           break;
         default:
-          cerr << "RView::ResetTarget: Can't work out x-orientation" << endl;
+          std::cerr << "RView::ResetTarget: Can't work out x-orientation" << 
+            std::endl;
           break;
       }
       switch (jaxis) {
@@ -2151,7 +2161,8 @@ void RView::Reset()
           _zaxis[2] = -yaxis[2];
           break;
         default:
-          cerr << "RView::ResetTarget: Can't work out y-orientation" << endl;
+          std::cerr << "RView::ResetTarget: Can't work out y-orientation" << 
+            std::endl;
           break;
       }
       switch (kaxis) {
@@ -2186,7 +2197,8 @@ void RView::Reset()
           _zaxis[2] = -zaxis[2];
           break;
         default:
-          cerr << "RView::ResetTarget: Can't work out z-orientation" << endl;
+          std::cerr << "RView::ResetTarget: Can't work out z-orientation" << 
+            std::endl;
           break;
       }
     } else {
@@ -2222,7 +2234,8 @@ void RView::Reset()
           _zaxis[2] = -xaxis[2];
           break;
         default:
-          cerr << "RView::ResetTarget: Can't work out x-orientation" << endl;
+          std::cerr << "RView::ResetTarget: Can't work out x-orientation" << 
+            std::endl;
           break;
       }
       switch (jaxis) {
@@ -2257,7 +2270,8 @@ void RView::Reset()
           _zaxis[2] = -yaxis[2];
           break;
         default:
-	  std::cerr << "RView::ResetTarget: Can't work out y-orientation" << std::endl;
+	  std::cerr << "RView::ResetTarget: Can't work out y-orientation" << 
+            std::endl;
           break;
       }
       switch (kaxis) {
@@ -2292,7 +2306,8 @@ void RView::Reset()
           _zaxis[2] = -zaxis[2];
           break;
         default:
-	  std::cerr << "RView::ResetTarget: Can't work out z-orientation" << std::endl;
+	  std::cerr << "RView::ResetTarget: Can't work out z-orientation" << 
+            std::endl;
           break;
       }
     }
@@ -2854,7 +2869,7 @@ void RView::Initialize(bool initialize_cache)
         attr._zaxis[2] = _xaxis[2];
         break;
       default:
-        cerr << "Not a valid viewer mode" << endl;
+        std::cerr << "Not a valid viewer mode" << std::endl;
         exit(1);
         break;
     }
@@ -3239,19 +3254,32 @@ void RView::cb_special(int key, int, int, int target_delta,
 
 void RView::cb_special_info()
 {
-  cerr << "\tSpecial function keys:\n";
-  cerr << "\tF1                               Increase min target intensity\n";
-  cerr << "\tF2                               Decrease min target intensity\n";
-  cerr << "\tF3                               Increase max target intensity\n";
-  cerr << "\tF4                               Decrease max target intensity\n";
-  cerr << "\tF5                               Increase min source intensity\n";
-  cerr << "\tF6                               Decrease min source intensity\n";
-  cerr << "\tF7                               Increase max source intensity\n";
-  cerr << "\tF8                               Decrease max source intensity\n";
-  cerr << "\tF9                               Display target contours on\n";
-  cerr << "\tF10                              Display target contours off\n";
-  cerr << "\tF11                              Display source contours on\n";
-  cerr << "\tF12                              Display source contours off\n\n";
+  std::cerr << 
+    "\tSpecial function keys:\n";
+  std::cerr << 
+    "\tF1                               Increase min target intensity\n";
+  std::cerr << 
+    "\tF2                               Decrease min target intensity\n";
+  std::cerr << 
+    "\tF3                               Increase max target intensity\n";
+  std::cerr << 
+    "\tF4                               Decrease max target intensity\n";
+  std::cerr << 
+    "\tF5                               Increase min source intensity\n";
+  std::cerr << 
+    "\tF6                               Decrease min source intensity\n";
+  std::cerr << 
+    "\tF7                               Increase max source intensity\n";
+  std::cerr << 
+    "\tF8                               Decrease max source intensity\n";
+  std::cerr << 
+    "\tF9                               Display target contours on\n";
+  std::cerr << 
+    "\tF10                              Display target contours off\n";
+  std::cerr << 
+    "\tF11                              Display source contours on\n";
+  std::cerr << 
+    "\tF12                              Display source contours off\n\n";
   return;
 }
 
@@ -3498,48 +3526,45 @@ void RView::SetRegionGrowingThresholdMaximum(int threshold)
 
 void RView::cb_keyboard_info()
 {
-  cerr << "\tControl keys:\n";
-  cerr << "\t'q'                              Exit\n";
-  cerr << "\t'r'                              Reset target\n";
-  cerr << "\t'R'                              Reset source\n";
-  cerr << "\t'l'                              Linear interpolation\n";
-  cerr
-  << "\t'n'                              Nearest neighbour interpolation\n";
-  cerr << "\t'c'                              C1-spline interpolation\n";
-  cerr << "\t'b'                              B-spline interpolation\n";
-  cerr << "\t'S'                              Sinc interpolation\n";
-  cerr << "\t't'                              View target\n";
-  cerr << "\t's'                              View source\n";
-  cerr << "\t'm'                              Mixed viewport (checkerboard)\n";
-  cerr << "\t'd'                              View difference (subtraction)\n";
-  cerr << "\t' '                              Cursor on/off\n";
-  cerr << "\t'h'                              Display cursor as cross hair\n";
-  cerr << "\t'x'                              Display cursor as X\n";
-  cerr << "\t'v'                              Display cursor as V\n";
-  cerr << "\t'B'                              Display cursor as bar\n";
-  cerr << "\t'g'                              Deformation grid     on/off\n";
-  cerr << "\t'p'                              Deformation points   on/off\n";
+  std::cerr << 
+"\tControl keys:\n"
+"\t'q'                              Exit\n"
+"\t'r'                              Reset target\n"
+"\t'R'                              Reset source\n"
+"\t'l'                              Linear interpolation\n"
+"\t'n'                              Nearest neighbour interpolation\n"
+"\t'c'                              C1-spline interpolation\n"
+"\t'b'                              B-spline interpolation\n"
+"\t'S'                              Sinc interpolation\n"
+"\t't'                              View target\n"
+"\t's'                              View source\n"
+"\t'm'                              Mixed viewport (checkerboard)\n"
+"\t'd'                              View difference (subtraction)\n"
+"\t' '                              Cursor on/off\n"
+"\t'h'                              Display cursor as cross hair\n"
+"\t'x'                              Display cursor as X\n"
+"\t'v'                              Display cursor as V\n"
+"\t'B'                              Display cursor as bar\n"
+"\t'g'                              Deformation grid     on/off\n"
+"\t'p'                              Deformation points   on/off\n"
 #ifndef HAS_VTK
-  cerr << "\t'@'                              Deformation labels   on/off\n";
+"\t'@'                              Deformation labels   on/off\n"
 #endif
-  cerr << "\t'a'                              Deformation arrows   on/off\n";
-  cerr << "\t'='                              Relative deformation on/off\n";
-  cerr << "\t'+'                              Increase deformation level\n";
-  cerr << "\t'-'                              Decrease deformation level\n";
-  cerr << "\t'L'                              Landmarks on/off\n";
+"\t'a'                              Deformation arrows   on/off\n"
+"\t'='                              Relative deformation on/off\n"
+"\t'+'                              Increase deformation level\n"
+"\t'-'                              Decrease deformation level\n"
+"\t'L'                              Landmarks on/off\n"
 #ifdef HAS_VTK
-  cerr << "\t'O'                              Object display on/off\n";
-  cerr << "\t'W'                              Object vectors warp on/off\n";
-  cerr << "\t'G'                              Object grid on/off\n";
+"\t'O'                              Object display on/off\n"
+"\t'W'                              Object vectors warp on/off\n"
+"\t'G'                              Object grid on/off\n"
 #endif
-  cerr
-  << "\t'>'                              Increase resolution by factor 2\n";
-  cerr
-  << "\t'<'                              Decrease resolution by factor 1/2\n";
-  cerr
-  << "\t'.'                              Increase resolution by factor sqrt(2)\n";
-  cerr
-  << "\t','                              Decrease resolution by factor 1/sqrt(2)\n\n";
+"\t'>'                              Increase resolution by factor 2\n"
+"\t'<'                              Decrease resolution by factor 1/2\n"
+"\t'.'                              Increase resolution by factor sqrt(2)\n"
+"\t','                              Decrease resolution by factor 1/sqrt(2)\n"
+"\n";
 
   return;
 }

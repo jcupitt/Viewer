@@ -129,7 +129,7 @@ void Fl_RViewUI::cb_resetSegmentTableConfig(Fl_Button *, void *)
 void Fl_RViewUI::cb_browseSegmentObject(Fl_Browser *o, void *)
 {
   int id = o->value();
-  //cerr <<id <<endl;
+  //std::cerr << id << std::endl;
 
   if (id == 0) {
     rviewUI->_id = -1;
@@ -209,7 +209,7 @@ void Fl_RViewUI::AddSegment(int label)
 void Fl_RViewUI::cb_deleteSegment(Fl_Button *, void *)
 {
   if (rviewUI->_id == -1) {
-    cerr << "ID = -1, this should never happen" << endl;
+    std::cerr << "ID = -1, this should never happen" << std::endl;
   } else {
     rview->GetSegmentTable()->Clear(rviewUI->_id);
   }
@@ -286,7 +286,7 @@ void Fl_RViewUI::cb_editSegmentLabel(Fl_Input* o, void *)
   sprintf(rviewUI->_label, "%s", o->value());
 
   if (rviewUI->_id == -1) {
-    cerr << "ID = -1, this should never happen" << endl;
+    std::cerr << "ID = -1, this should never happen" << std::endl;
   } else {
     rview->GetSegmentTable()->Set(rviewUI->_id, rviewUI->_label, rviewUI->_red, rviewUI->_green, rviewUI->_blue, rviewUI->_trans, rviewUI->_vis);
   }
@@ -316,7 +316,7 @@ void Fl_RViewUI::cb_editSegmentPickColor(Fl_Button *, void *)
   rviewUI->editSegmentColor->color(fl_rgb_color(rviewUI->_red, rviewUI->_green, rviewUI->_blue));
 
   if (rviewUI->_id == -1) {
-    cerr << "ID = -1, this should never happen" << endl;
+    std::cerr << "ID = -1, this should never happen" << std::endl;
   } else {
     rview->GetSegmentTable()->Set(rviewUI->_id, rviewUI->_label, rviewUI->_red, rviewUI->_green, rviewUI->_blue, rviewUI->_trans, rviewUI->_vis);
   }
@@ -332,7 +332,7 @@ void Fl_RViewUI::cb_editSegmentTransperancy(Fl_Slider* o, void *)
   rviewUI->_trans = o->value();
 
   if (rviewUI->_id == -1) {
-    cerr << "ID = -1, this should never happen" << endl;
+    std::cerr << "ID = -1, this should never happen" << std::endl;
   } else {
     rview->GetSegmentTable()->Set(rviewUI->_id, rviewUI->_label, rviewUI->_red, rviewUI->_green, rviewUI->_blue, rviewUI->_trans, rviewUI->_vis);
   }
@@ -348,7 +348,7 @@ void Fl_RViewUI::cb_editSegmentVisibility(Fl_Check_Button* o, void *)
   rviewUI->_vis = int(o->value());
 
   if (rviewUI->_id == -1) {
-    cerr << "ID = -1, this should never happen" << endl;
+    std::cerr << "ID = -1, this should never happen" << std::endl;
   } else {
     rview->GetSegmentTable()->Set(rviewUI->_id, rviewUI->_label, rviewUI->_red, rviewUI->_green, rviewUI->_blue, rviewUI->_trans, rviewUI->_vis);
   }

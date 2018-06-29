@@ -23,56 +23,63 @@ RView    *rview;
 
 void usage()
 {
-  cerr << "Usage: rview [target] <source <dofin>> <options>\n";
-  cerr << "Where <options> can be one or more of the following:\n";
-  cerr << "\t<-config           file.cnf>     Rview configuration file\n";
-  cerr << "\t<-target_landmarks file.vtk>     Target landmarks (vtkPolyData)\n";
-  cerr << "\t<-source_landmarks file.vtk>     Source landmarks (vtkPolyData)\n";
+  std::cerr << 
+"Usage: rview [target] <source <dofin>> <options>\n"
+"Where <options> can be one or more of the following:\n"
+"\t<-config           file.cnf>     Rview configuration file\n"
+"\t<-target_landmarks file.vtk>     Target landmarks (vtkPolyData)\n"
+"\t<-source_landmarks file.vtk>     Source landmarks (vtkPolyData)\n"
 #ifdef HAS_VTK
-  cerr << "\t<-object           file.vtk>     Object           (vtkPointSet)\n";
-  cerr << "\t<-object_warp>                   Warp object with vectors\n";
-  cerr << "\t<-object_grid>                   Object grid on\n";
+"\t<-object           file.vtk>     Object           (vtkPointSet)\n"
+"\t<-object_warp>                   Warp object with vectors\n"
+"\t<-object_grid>                   Object grid on\n"
 #endif
-  cerr << "\t<-eigen values.mirtk vectors.mirtk>  Eigen modes\n";
-  cerr << "\t<-xy      | -xz      | -yz>      Single     view\n";
-  cerr << "\t<-xy_xz_v | -xy_yz_v | -xz_yz_v> Vertical   view\n";
-  cerr << "\t<-xy_xz_h | -xy_yz_h | -xz_yz_h> Horizontal view\n";
-  cerr << "\t<-ab_xy_v | -ab_xz_v | -ab_yz_v> Side-by-side view of single views\n";
-  cerr << "\t<-ab_xy_h | -ab_xz_h | -ab_yz_h> Side-by-side view of single views\n";
-  cerr << "\t<-ab_xy_xz_v | ab_xy_xz_h>       Side-by-side view of vertical/horizontal views\n";
-  cerr << "\t<-cursor>                        Cursor off\n";
-  cerr << "\t<-grid>                          Deformation grid   on\n";
-  cerr << "\t<-points>                        Deformation points on\n";
-  cerr << "\t<-arrow>                         Deformation arrows on\n";
-  cerr << "\t<-level value>                   Deformation level\n";
-  cerr << "\t<-res   value>                   Resolution factor\n";
-  cerr << "\t<-nn>                            Nearest neighbour interpolation (default)\n";
-  cerr << "\t<-linear>                        Linear interpolation\n";
-  cerr << "\t<-c1spline>                      C1-spline interpolation\n";
-  cerr << "\t<-bspline>                       B-spline interpolation\n";
-  cerr << "\t<-sinc>                          Sinc interpolation\n";
-  cerr << "\t<-origin x y z>                  Reslice position\n";
-  cerr << "\t<-tmin value>                    Min. target intensity\n";
-  cerr << "\t<-tmax value>                    Max. target intensity\n";
-  cerr << "\t<-smin value>                    Min. source intensity\n";
-  cerr << "\t<-smax value>                    Max. source intensity\n";
-  cerr << "\t<-sub_min value>                 Min. subtraction intensity\n";
-  cerr << "\t<-sub_max value>                 Max. subtraction intensity\n";
-  cerr << "\t<-view_target>                   View target (default)\n";
-  cerr << "\t<-view_source>                   View source\n";
-  cerr << "\t<-mix>                           Mixed viewport (checkerboard)\n";
-  cerr << "\t<-tcolor color>                  Target image color\n";
-  cerr << "\t<-scolor color>                  Source image color\n";
-  cerr << "\t   where color is  <red | blue | green | rainbow>\n";
-  cerr << "\t<-diff>                          Subtraction view\n";
-  cerr << "\t<-tcontour>                      Switch on target contours (see -tmin)\n";
-  cerr << "\t<-scontour>                      Switch on source contours (see -smin)\n";
-  cerr << "\t<-seg              file.nii.gz>  Labelled segmentation image\n";
-  cerr << "\t<-lut              file.seg>     Colour lookup table for labelled segmentation\n\n";
-  cerr << "\t<-labels>                        Display segmentation labels instead of contours\n";
-  cerr << "\tMouse events:\n";
-  cerr << "\tLeft mouse click :               Reslice\n\n";
+"\t<-eigen values.mirtk vectors.mirtk>  Eigen modes\n"
+"\t<-xy      | -xz      | -yz>      Single     view\n"
+"\t<-xy_xz_v | -xy_yz_v | -xz_yz_v> Vertical   view\n"
+"\t<-xy_xz_h | -xy_yz_h | -xz_yz_h> Horizontal view\n"
+"\t<-ab_xy_v | -ab_xz_v | -ab_yz_v> Side-by-side view of single views\n"
+"\t<-ab_xy_h | -ab_xz_h | -ab_yz_h> Side-by-side view of single views\n"
+"\t<-ab_xy_xz_v | ab_xy_xz_h>       Side-by-side view of\n"
+"\t                                   vertical/horizontal views\n"
+"\t<-cursor>                        Cursor off\n"
+"\t<-grid>                          Deformation grid   on\n"
+"\t<-points>                        Deformation points on\n"
+"\t<-arrow>                         Deformation arrows on\n"
+"\t<-level value>                   Deformation level\n"
+"\t<-res   value>                   Resolution factor\n"
+"\t<-nn>                            Nearest neighbour interpolation (default)\n"
+"\t<-linear>                        Linear interpolation\n"
+"\t<-c1spline>                      C1-spline interpolation\n"
+"\t<-bspline>                       B-spline interpolation\n"
+"\t<-sinc>                          Sinc interpolation\n"
+"\t<-origin x y z>                  Reslice position\n"
+"\t<-tmin value>                    Min. target intensity\n"
+"\t<-tmax value>                    Max. target intensity\n"
+"\t<-smin value>                    Min. source intensity\n"
+"\t<-smax value>                    Max. source intensity\n"
+"\t<-sub_min value>                 Min. subtraction intensity\n"
+"\t<-sub_max value>                 Max. subtraction intensity\n"
+"\t<-view_target>                   View target (default)\n"
+"\t<-view_source>                   View source\n"
+"\t<-mix>                           Mixed viewport (checkerboard)\n"
+"\t<-tcolor color>                  Target image color\n"
+"\t<-scolor color>                  Source image color\n"
+"\t   where color is  <red | blue | green | rainbow>\n"
+"\t<-diff>                          Subtraction view\n"
+"\t<-tcontour>                      Switch on target contours (see -tmin)\n"
+"\t<-scontour>                      Switch on source contours (see -smin)\n"
+"\t<-seg              file.nii.gz>  Labelled segmentation image\n"
+"\t<-lut              file.seg>     Colour lookup table for labelled\n"
+"\t                                   segmentation\n"
+"\t<-labels>                        Display segmentation labels instead of\n"
+"\t                                   contours\n"
+"\tMouse events:\n"
+"\tLeft mouse click :               Reslice\n"
+"\n";
+
   rview->cb_keyboard_info();
+
   // exit(1);
 }
 
@@ -602,7 +609,7 @@ int main(int argc, char **argv)
       ok = true;
     }
     if (ok == false) {
-      cerr << "Unknown argument: " << argv[1] << endl;
+      std::cerr << "Unknown argument: " << argv[1] << std::endl;
       exit(1);
     }
   }

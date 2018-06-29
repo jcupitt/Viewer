@@ -1,7 +1,8 @@
-find_package(FLTK REQUIRED NO_MODULE)
 cmake_minimum_required(VERSION 3.9)
 
-find_package(VTK)
+find_package(FLTK REQUIRED NO_MODULE)
+find_package(VTK REQUIRED)
+find_package(TBB REQUIRED)
 
 find_package(MIRTK REQUIRED
 	PointSet

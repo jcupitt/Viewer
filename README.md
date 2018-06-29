@@ -13,7 +13,7 @@ This builds against current MIRTK and VTK and can at least load and display
 $ cd Viewer
 $ mkdir build
 $ cd build
-$ cmake -D CMAKE_BUILD_TYPE=Debug -D CMAKE_MODULE_PATH:PATH=$MIRTK_ROOT/lib/cmake/mirtk -D CMAKE_INSTALL_PREFIX:PATH=$MIRTK_ROOT ..
+$ cmake -D CMAKE_BUILD_TYPE=Debug -D "CMAKE_MODULE_PATH:PATH=$MIRTK_ROOT/lib/cmake/mirtk;$MIRTK_ROOT/share/cmake" -D CMAKE_INSTALL_PREFIX:PATH=$MIRTK_ROOT ..
 $ make
 ```
 

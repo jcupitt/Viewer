@@ -1556,7 +1556,7 @@ inline int RView::GetViewTAG()
 inline vtkPointSet *RView::GetObject(int i)
 {
   if ((i < 0) || (i > _NoOfObjects-1)) {
-    cerr << "RView::GetObject: Invalid object: " << i << endl;
+    std::cerr << "RView::GetObject: Invalid object: " << i << std::endl;
     return NULL;
   }
   return _Object[i];
@@ -1894,7 +1894,8 @@ inline void RView::InsertTargetLandmark(mirtk::Point &point, int id, char *)
       _targetLandmarks.Add(pset(i-1));
     }
   } else {
-    cerr << "RView::InsertTargetLandmark : invalid position " << id << endl;
+    std::cerr << "RView::InsertTargetLandmark : invalid position " << 
+      id << std::endl;
   }
 }
 
@@ -1916,7 +1917,8 @@ inline void RView::InsertSourceLandmark(mirtk::Point &point, int id, char *)
       _sourceLandmarks.Add(pset(i-1));
     }
   } else {
-    cerr << "RView::InsertSourceLandmark : invalid position " << id << endl;
+    std::cerr << "RView::InsertSourceLandmark : invalid position " << 
+      id << std::endl;
   }
 }
 

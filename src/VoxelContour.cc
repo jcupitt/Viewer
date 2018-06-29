@@ -303,7 +303,8 @@ void VoxelContour::AddPoint(mirtk::Point p, int width)
 
   // Check if contour has been initialised
   if (_raster == NULL) {
-    cerr << "Please, always initialise VoxelContour before adding any points!" << endl;
+    std::cerr << "Please, always initialise VoxelContour "
+      "before adding any points!" << std::endl;
     exit(1);
   }
   _raster->WorldToImage(p);
@@ -391,7 +392,8 @@ void VoxelContour::FillArea(mirtk::Point p)
   if ((round(p._x) < 0) || (round(p._x) >= _rview->_targetImage->GetX()) ||
       (round(p._y) < 0) || (round(p._y) >= _rview->_targetImage->GetY()) ||
       (round(p._z) < 0) || (round(p._z) >= _rview->_targetImage->GetZ())) {
-    cerr << "Target coordinates out of range: " << x << " " << y << " " << z << " " << endl;
+    std::cerr << "Target coordinates out of range: " << 
+      x << " " << y << " " << z << " " << std::endl;
     return;
   }
 
@@ -423,7 +425,8 @@ void VoxelContour::RegionGrowing(mirtk::Point p, int thresholdMin, int threshold
   if ((round(p._x) < 0) || (round(p._x) >= _rview->_targetImage->GetX()) ||
       (round(p._y) < 0) || (round(p._y) >= _rview->_targetImage->GetY()) ||
       (round(p._z) < 0) || (round(p._z) >= _rview->_targetImage->GetZ())) {
-    cerr << "Target coordinates out of range: " << x << " " << y << " " << z << " " << endl;
+    std::cerr << "Target coordinates out of range: " << 
+      x << " " << y << " " << z << " " << std::endl;
     return;
   }
 
@@ -474,7 +477,7 @@ void VoxelContour::lineBresenham(int x0, int y0, int z0, int x1, int y1, int z1)
   int stepx, stepy;
 
   if (z1 != z0) {
-    cerr << "lineBresenham: Should not happen" << endl;
+    std::cerr << "lineBresenham: Should not happen" << std::endl;
   }
 
   if ((dx == 0) && (dy == 0)) return;
